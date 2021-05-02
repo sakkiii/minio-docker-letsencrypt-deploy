@@ -97,6 +97,8 @@ services:
       - minio2
       - minio3
       - minio4
+    restart: always
+
 
 ## By default this config uses default local driver,
 ## For custom volumes replace with volume driver configuration.
