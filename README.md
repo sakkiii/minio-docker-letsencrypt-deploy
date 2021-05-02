@@ -8,13 +8,21 @@ Distributed MinIO deployed via Docker Compose with autorenew ssl certificate usi
 
 ## Quick Start
 
-1. Create .env & edit it
+1. Create .env
 
 ```
 cp .env.example .env
 ```
 
-2. Start MinIO server
+2. change the environment variables 
+- MINIO_ROOT_USER: MinIO ACCESS_KEY
+- MINIO_ROOT_PASSWORD: MinIO SECRET_KEY
+- MINIO_REGION_NAME: name of the location of the server {default. "us-east-1"}
+- MINIO_BROWSER: Enable or disable access to web UI {default. on}
+- FQDN: a space separated list of domains for which you want to generate certificates {default. FQDN}
+- CERTBOT_EMAIL: where you will receive updates from letsencrypt.
+
+3. Start MinIO server
 
 ```
 docker-compose down
@@ -22,11 +30,14 @@ docker-compose down
 docker-compose up -d
 ```
 
-3. MinIO server' container health status
+4. MinIO server' containers health status
 
 ```
 watch -n 3 "docker ps -a"
 ```
+
+5. Distributed instances are now accessible on the host at ports 443, proceed to access the Web browser at https://your.example.com/. 
+Here 4 MinIO server instances are reverse proxied through Nginx load balancing.
 
 ## License
 

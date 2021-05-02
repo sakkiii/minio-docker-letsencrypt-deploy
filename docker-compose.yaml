@@ -14,7 +14,8 @@ services:
     environment:
       MINIO_ROOT_USER: ${MINIO_ROOT_USER}
       MINIO_ROOT_PASSWORD: ${MINIO_ROOT_PASSWORD}
-      MINIO_REGION_NAME: ${MINIO_REGION_NAME}
+      MINIO_REGION_NAME: ${MINIO_REGION_NAME:-us-east-1}
+      MINIO_BROWSER: ${MINIO_BROWSER:-on}
     command: server http://minio{1...4}/data{1...2}
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:9000/minio/health/live"]
@@ -32,7 +33,8 @@ services:
     environment:
       MINIO_ROOT_USER: ${MINIO_ROOT_USER}
       MINIO_ROOT_PASSWORD: ${MINIO_ROOT_PASSWORD}
-      MINIO_REGION_NAME: ${MINIO_REGION_NAME}
+      MINIO_REGION_NAME: ${MINIO_REGION_NAME:-us-east-1}
+      MINIO_BROWSER: ${MINIO_BROWSER:-on}
     command: server http://minio{1...4}/data{1...2}
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:9000/minio/health/live"]
@@ -50,7 +52,8 @@ services:
     environment:
       MINIO_ROOT_USER: ${MINIO_ROOT_USER}
       MINIO_ROOT_PASSWORD: ${MINIO_ROOT_PASSWORD}
-      MINIO_REGION_NAME: ${MINIO_REGION_NAME}
+      MINIO_REGION_NAME: ${MINIO_REGION_NAME:-us-east-1}
+      MINIO_BROWSER: ${MINIO_BROWSER:-on}
     command: server http://minio{1...4}/data{1...2}
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:9000/minio/health/live"]
@@ -68,7 +71,8 @@ services:
     environment:
       MINIO_ROOT_USER: ${MINIO_ROOT_USER}
       MINIO_ROOT_PASSWORD: ${MINIO_ROOT_PASSWORD}
-      MINIO_REGION_NAME: ${MINIO_REGION_NAME}
+      MINIO_REGION_NAME: ${MINIO_REGION_NAME:-us-east-1}
+      MINIO_BROWSER: ${MINIO_BROWSER:-on}
     command: server http://minio{1...4}/data{1...2}
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:9000/minio/health/live"]
@@ -83,12 +87,11 @@ services:
       - letsencrypt:/etc/letsencrypt
     environment:
       CERTBOT_EMAIL: ${CERTBOT_EMAIL}
-      ENVSUBST_VARS: ${ENVSUBST_VARS}
+      ENVSUBST_VARS: ${ENVSUBST_VARS:-FQDN}
       FQDN: ${FQDN}
     ports:
       - "80:80"
       - "443:443"
-      #- "9000:9000"
     depends_on:
       - minio1
       - minio2
