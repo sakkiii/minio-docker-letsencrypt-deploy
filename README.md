@@ -22,7 +22,6 @@ cp .env.example .env
 - MINIO_REGION_NAME: name of the location of the server {default. "us-east-1"}
 - MINIO_BROWSER: Enable or disable access to web UI {default. on}
 - FQDN: a space separated list of domains for which you want to generate certificates.
-- ENVSUBST_VARS: envsubst can take as a parameter the names of variables to replace. {default. FQDN}
 - CERTBOT_EMAIL: where you will receive updates from letsencrypt.
 ```
 

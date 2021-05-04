@@ -87,7 +87,7 @@ services:
       - letsencrypt:/etc/letsencrypt
     environment:
       CERTBOT_EMAIL: ${CERTBOT_EMAIL}
-      ENVSUBST_VARS: ${ENVSUBST_VARS:-FQDN}
+      ENVSUBST_VARS: FQDN
       FQDN: ${FQDN}
     ports:
       - "80:80"
@@ -99,6 +99,18 @@ services:
       - minio4
     restart: always
 
+  s3-bucket:
+    image: minio/mc
+    depends_on:
+      - nginx
+    entrypoint: >
+      /bin/sh -c "
+      /usr/bin/mc config host add myminio https://${FQDN} ${MINIO_ROOT_USER} ${MINIO_ROOT_PASSWORD};
+      /usr/bin/mc rm -r --force myminio/${MINIO_DEFAULT_BUCKET};
+      /usr/bin/mc mb myminio/${MINIO_DEFAULT_BUCKET};
+      /usr/bin/mc policy download myminio/${MINIO_DEFAULT_BUCKET};
+      exit 0;
+      "
 
 ## By default this config uses default local driver,
 ## For custom volumes replace with volume driver configuration.
