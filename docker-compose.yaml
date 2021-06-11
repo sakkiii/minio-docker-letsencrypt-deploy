@@ -16,6 +16,7 @@ services:
       MINIO_ROOT_PASSWORD: ${MINIO_ROOT_PASSWORD}
       MINIO_REGION_NAME: ${MINIO_REGION_NAME:-us-east-1}
       MINIO_BROWSER: ${MINIO_BROWSER:-on}
+      MINIO_PROMETHEUS_AUTH_TYPE: "public"
     command: server http://minio{1...4}/data{1...2}
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:9000/minio/health/live"]
@@ -34,7 +35,8 @@ services:
       MINIO_ROOT_USER: ${MINIO_ROOT_USER}
       MINIO_ROOT_PASSWORD: ${MINIO_ROOT_PASSWORD}
       MINIO_REGION_NAME: ${MINIO_REGION_NAME:-us-east-1}
-      MINIO_BROWSER: ${MINIO_BROWSER:-on}
+      MINIO_BROWSER: ${MINIO_BROWSER:-on
+      MINIO_PROMETHEUS_AUTH_TYPE: "public"
     command: server http://minio{1...4}/data{1...2}
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:9000/minio/health/live"]
@@ -54,6 +56,7 @@ services:
       MINIO_ROOT_PASSWORD: ${MINIO_ROOT_PASSWORD}
       MINIO_REGION_NAME: ${MINIO_REGION_NAME:-us-east-1}
       MINIO_BROWSER: ${MINIO_BROWSER:-on}
+      MINIO_PROMETHEUS_AUTH_TYPE: "public"
     command: server http://minio{1...4}/data{1...2}
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:9000/minio/health/live"]
@@ -73,6 +76,7 @@ services:
       MINIO_ROOT_PASSWORD: ${MINIO_ROOT_PASSWORD}
       MINIO_REGION_NAME: ${MINIO_REGION_NAME:-us-east-1}
       MINIO_BROWSER: ${MINIO_BROWSER:-on}
+      MINIO_PROMETHEUS_AUTH_TYPE: "public"
     command: server http://minio{1...4}/data{1...2}
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:9000/minio/health/live"]
@@ -98,6 +102,17 @@ services:
       - minio3
       - minio4
     restart: always
+  
+  prometheus:
+    image: prom/prometheus:latest
+    ports:
+    - 9090:9090
+    command:
+    - --config.file=/etc/prometheus/prometheus.yml
+    volumes:
+    - ./prometheus.yml:/etc/prometheus/prometheus.yml:ro
+    depends_on:
+    - nginx
 
   s3-bucket:
     image: minio/mc
