@@ -35,7 +35,7 @@ services:
       MINIO_ROOT_USER: ${MINIO_ROOT_USER}
       MINIO_ROOT_PASSWORD: ${MINIO_ROOT_PASSWORD}
       MINIO_REGION_NAME: ${MINIO_REGION_NAME:-us-east-1}
-      MINIO_BROWSER: ${MINIO_BROWSER:-on
+      MINIO_BROWSER: ${MINIO_BROWSER:-on}
       MINIO_PROMETHEUS_AUTH_TYPE: "public"
     command: server http://minio{1...4}/data{1...2}
     healthcheck:
