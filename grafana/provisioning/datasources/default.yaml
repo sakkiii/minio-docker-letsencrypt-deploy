@@ -1,0 +1,9 @@
+apiVersion: 1
+
+datasources:
+  - name: alphaban.ml - Prometheus
+    type: prometheus
+    url: http://prometheus:9090
+    basicAuth: false
+    isDefault: true
+    editable: true

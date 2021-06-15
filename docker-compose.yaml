@@ -17,7 +17,7 @@ services:
       MINIO_ROOT_PASSWORD: minio123
       MINIO_REGION_NAME: ${MINIO_REGION_NAME:-us-east-1}
       MINIO_BROWSER: ${MINIO_BROWSER:-on}
-      MINIO_PROMETHEUS_AUTH_TYPE: public
+      MINIO_PROMETHEUS_AUTH_TYPE: "public"
     command: server http://minio{1...4}/data{1...2}
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:9000/minio/health/live"]
@@ -38,7 +38,7 @@ services:
       MINIO_ROOT_PASSWORD: minio123
       MINIO_REGION_NAME: ${MINIO_REGION_NAME:-us-east-1}
       MINIO_BROWSER: ${MINIO_BROWSER:-on}
-      MINIO_PROMETHEUS_AUTH_TYPE: public
+      MINIO_PROMETHEUS_AUTH_TYPE: "public"
     command: server http://minio{1...4}/data{1...2}
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:9000/minio/health/live"]
@@ -59,7 +59,7 @@ services:
       MINIO_ROOT_PASSWORD: minio123
       MINIO_REGION_NAME: ${MINIO_REGION_NAME:-us-east-1}
       MINIO_BROWSER: ${MINIO_BROWSER:-on}
-      MINIO_PROMETHEUS_AUTH_TYPE: public
+      MINIO_PROMETHEUS_AUTH_TYPE: "public"
     command: server http://minio{1...4}/data{1...2}
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:9000/minio/health/live"]
@@ -80,7 +80,7 @@ services:
       MINIO_ROOT_PASSWORD: minio123
       MINIO_REGION_NAME: ${MINIO_REGION_NAME:-us-east-1}
       MINIO_BROWSER: ${MINIO_BROWSER:-on}
-      MINIO_PROMETHEUS_AUTH_TYPE: public
+      MINIO_PROMETHEUS_AUTH_TYPE: "public"
     command: server http://minio{1...4}/data{1...2}
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:9000/minio/health/live"]
@@ -109,15 +109,39 @@ services:
 
   prometheus:
     image: prom/prometheus:latest
-    ports:
-    - 9090:9090
+    #ports:
+    #- 9090:9090
+    expose:
+      - 9090
     command:
     - --config.file=/etc/prometheus/prometheus.yml
+    - --storage.tsdb.path=/prometheus
+    - --storage.tsdb.retention.time=48h
     volumes:
     - ./prometheus.yml:/etc/prometheus/prometheus.yml:ro
+    - prometheus_data:/prometheus
     depends_on:
     - nginx
     restart: on-failure
+
+  grafana:
+    image: grafana/grafana:8.0.0
+    ports:
+    - 3000:3000
+    volumes:
+      - grafana_data:/var/lib/grafana
+      - ./grafana/provisioning/dashboards:/etc/grafana/provisioning/dashboards
+      - ./grafana/provisioning/datasources:/etc/grafana/provisioning/datasources
+      - ./grafana/dashboards:/etc/grafana/dashboards
+    environment:
+      - GF_SECURITY_ADMIN_USER=${ADMIN_USER:-admin}
+      - GF_SECURITY_ADMIN_PASSWORD=${ADMIN_PASSWORD:-admin}
+      - GF_USERS_ALLOW_SIGN_UP=false
+      - GF_PATHS_PROVISIONING=/etc/grafana/provisioning
+      - GF_DASHBOARDS_DEFAULT_HOME_DASHBOARD_PATH=/etc/grafana/dashboards/minio-overview_rev10.json
+    depends_on:
+    - prometheus  
+    restart: unless-stopped
 
 ## By default this config uses default local driver,
 ## For custom volumes replace with volume driver configuration.
@@ -131,3 +155,5 @@ volumes:
   data4-1:
   data4-2:
   letsencrypt:
+  grafana_data:
+  prometheus_data:
