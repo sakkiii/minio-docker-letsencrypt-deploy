@@ -7,20 +7,20 @@ evaluation_interval: 30s # Evaluate rules every 15 seconds. The default is every
 # Here it's Prometheus itself.
 scrape_configs:
     # The job name is added as a label `job=<job_name>` to any timeseries scraped from this config.
-- job_name: minio-nodes
-metrics_path: /minio/v2/metrics/node
-scheme: http
-static_configs:
-- targets:
-- 'minio1:9000'
-- 'minio2:9000'
-- 'minio3:9000'
-- 'minio4:9000'
+  - job_name: minio-nodes
+  metrics_path: /minio/v2/metrics/node
+  scheme: http
+  static_configs:
+  - targets:
+  - 'minio1:9000'
+  - 'minio2:9000'
+  - 'minio3:9000'
+  - 'minio4:9000'
 
-- job_name: minio-cluster
-metrics_path: /minio/v2/metrics/cluster
-scheme: https
-tls_config:
-insecure_skip_verify: true
-static_configs:
-- targets: ['nginx:443']
+  - job_name: minio-cluster
+  metrics_path: /minio/v2/metrics/cluster
+  scheme: https
+  tls_config:
+  insecure_skip_verify: true
+  static_configs:
+  - targets: ['nginx:443']
