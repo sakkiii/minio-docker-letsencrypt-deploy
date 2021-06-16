@@ -1,4 +1,52 @@
 {
+  "__inputs": [
+    {
+      "name": "DS_PROMETHEUS",
+      "label": "Prometheus",
+      "description": "",
+      "type": "datasource",
+      "pluginId": "prometheus",
+      "pluginName": "Prometheus"
+    }
+  ],
+  "__requires": [
+    {
+      "type": "panel",
+      "id": "bargauge",
+      "name": "Bar gauge",
+      "version": ""
+    },
+    {
+      "type": "panel",
+      "id": "gauge",
+      "name": "Gauge",
+      "version": ""
+    },
+    {
+      "type": "grafana",
+      "id": "grafana",
+      "name": "Grafana",
+      "version": "7.5.5"
+    },
+    {
+      "type": "panel",
+      "id": "graph",
+      "name": "Graph",
+      "version": ""
+    },
+    {
+      "type": "datasource",
+      "id": "prometheus",
+      "name": "Prometheus",
+      "version": "1.0.0"
+    },
+    {
+      "type": "panel",
+      "id": "stat",
+      "name": "Stat",
+      "version": ""
+    }
+  ],
   "annotations": {
     "list": [
       {
@@ -7,7 +55,6 @@
         "enable": true,
         "hide": true,
         "iconColor": "rgba(0, 211, 255, 1)",
-        "limit": 100,
         "name": "Annotations & Alerts",
         "type": "dashboard"
       }
@@ -17,7 +64,7 @@
   "editable": true,
   "gnetId": 13502,
   "graphTooltip": 0,
-  "id": 3,
+  "id": null,
   "links": [
     {
       "icon": "external link",
@@ -38,13 +85,11 @@
         "defaults": {
           "mappings": [
             {
-              "options": {
-                "match": "null",
-                "result": {
-                  "text": "N/A"
-                }
-              },
-              "type": "special"
+              "id": 0,
+              "op": "=",
+              "text": "N/A",
+              "type": 1,
+              "value": "null"
             }
           ],
           "thresholds": {
@@ -85,7 +130,7 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.0.2",
+      "pluginVersion": "7.5.5",
       "targets": [
         {
           "exemplar": true,
@@ -113,13 +158,11 @@
         "defaults": {
           "mappings": [
             {
-              "options": {
-                "match": "null",
-                "result": {
-                  "text": "N/A"
-                }
-              },
-              "type": "special"
+              "id": 0,
+              "op": "=",
+              "text": "N/A",
+              "type": 1,
+              "value": "null"
             }
           ],
           "thresholds": {
@@ -160,7 +203,7 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.0.2",
+      "pluginVersion": "7.5.5",
       "targets": [
         {
           "expr": "sum by (instance) (minio_s3_traffic_received_bytes{job=\"minio-job\"})",
@@ -187,13 +230,11 @@
         "defaults": {
           "mappings": [
             {
-              "options": {
-                "match": "null",
-                "result": {
-                  "text": "N/A"
-                }
-              },
-              "type": "special"
+              "id": 0,
+              "op": "=",
+              "text": "N/A",
+              "type": 1,
+              "value": "null"
             }
           ],
           "thresholds": {
@@ -232,7 +273,7 @@
         "showThresholdMarkers": true,
         "text": {}
       },
-      "pluginVersion": "8.0.2",
+      "pluginVersion": "7.5.5",
       "targets": [
         {
           "expr": "topk(1, sum(minio_cluster_capacity_usable_free_bytes) by (instance))",
@@ -256,6 +297,10 @@
       "dashLength": 10,
       "dashes": false,
       "datasource": "alphaban.ml - Prometheus",
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": []
+      },
       "fill": 1,
       "fillGradient": 0,
       "gridPos": {
@@ -282,7 +327,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "8.0.2",
+      "pluginVersion": "7.5.5",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -384,7 +429,7 @@
         "showUnfilled": false,
         "text": {}
       },
-      "pluginVersion": "8.0.2",
+      "pluginVersion": "7.5.5",
       "targets": [
         {
           "expr": "max by (range) (minio_bucket_objects_size_distribution)",
@@ -410,13 +455,11 @@
         "defaults": {
           "mappings": [
             {
-              "options": {
-                "match": "null",
-                "result": {
-                  "text": "N/A"
-                }
-              },
-              "type": "special"
+              "id": 0,
+              "op": "=",
+              "text": "N/A",
+              "type": 1,
+              "value": "null"
             }
           ],
           "thresholds": {
@@ -461,7 +504,7 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.0.2",
+      "pluginVersion": "7.5.5",
       "targets": [
         {
           "exemplar": true,
@@ -490,13 +533,11 @@
         "defaults": {
           "mappings": [
             {
-              "options": {
-                "match": "null",
-                "result": {
-                  "text": "N/A"
-                }
-              },
-              "type": "special"
+              "id": 0,
+              "op": "=",
+              "text": "N/A",
+              "type": 1,
+              "value": "null"
             }
           ],
           "thresholds": {
@@ -537,7 +578,7 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.0.2",
+      "pluginVersion": "7.5.5",
       "targets": [
         {
           "expr": "sum by (instance) (minio_s3_traffic_sent_bytes{job=\"minio-job\"})",
@@ -565,13 +606,11 @@
         "defaults": {
           "mappings": [
             {
-              "options": {
-                "match": "null",
-                "result": {
-                  "text": "N/A"
-                }
-              },
-              "type": "special"
+              "id": 0,
+              "op": "=",
+              "text": "N/A",
+              "type": 1,
+              "value": "null"
             }
           ],
           "thresholds": {
@@ -616,7 +655,7 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.0.2",
+      "pluginVersion": "7.5.5",
       "targets": [
         {
           "exemplar": true,
@@ -645,13 +684,11 @@
         "defaults": {
           "mappings": [
             {
-              "options": {
-                "match": "null",
-                "result": {
-                  "text": "N/A"
-                }
-              },
-              "type": "special"
+              "id": 0,
+              "op": "=",
+              "text": "N/A",
+              "type": 1,
+              "value": "null"
             }
           ],
           "thresholds": {
@@ -696,7 +733,7 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.0.2",
+      "pluginVersion": "7.5.5",
       "targets": [
         {
           "expr": "minio_cluster_nodes_online_total",
@@ -724,13 +761,11 @@
         "defaults": {
           "mappings": [
             {
-              "options": {
-                "match": "null",
-                "result": {
-                  "text": "N/A"
-                }
-              },
-              "type": "special"
+              "id": 0,
+              "op": "=",
+              "text": "N/A",
+              "type": 1,
+              "value": "null"
             }
           ],
           "thresholds": {
@@ -775,7 +810,7 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.0.2",
+      "pluginVersion": "7.5.5",
       "targets": [
         {
           "exemplar": true,
@@ -803,13 +838,11 @@
         "defaults": {
           "mappings": [
             {
-              "options": {
-                "match": "null",
-                "result": {
-                  "text": "N/A"
-                }
-              },
-              "type": "special"
+              "id": 0,
+              "op": "=",
+              "text": "N/A",
+              "type": 1,
+              "value": "null"
             }
           ],
           "thresholds": {
@@ -858,7 +891,7 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.0.2",
+      "pluginVersion": "7.5.5",
       "targets": [
         {
           "expr": "count(count by (bucket) (minio_bucket_usage_total_bytes))",
@@ -882,6 +915,10 @@
       "dashLength": 10,
       "dashes": false,
       "datasource": "alphaban.ml - Prometheus",
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": []
+      },
       "fill": 1,
       "fillGradient": 0,
       "gridPos": {
@@ -908,7 +945,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "8.0.2",
+      "pluginVersion": "7.5.5",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -978,6 +1015,10 @@
       "dashLength": 10,
       "dashes": false,
       "datasource": "alphaban.ml - Prometheus",
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": []
+      },
       "fill": 1,
       "fillGradient": 0,
       "gridPos": {
@@ -1004,7 +1045,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "8.0.2",
+      "pluginVersion": "7.5.5",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -1073,13 +1114,11 @@
         "defaults": {
           "mappings": [
             {
-              "options": {
-                "match": "null",
-                "result": {
-                  "text": "N/A"
-                }
-              },
-              "type": "special"
+              "id": 0,
+              "op": "=",
+              "text": "N/A",
+              "type": 1,
+              "value": "null"
             }
           ],
           "thresholds": {
@@ -1124,7 +1163,7 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.0.2",
+      "pluginVersion": "7.5.5",
       "targets": [
         {
           "expr": "minio_cluster_nodes_offline_total",
@@ -1152,13 +1191,11 @@
         "defaults": {
           "mappings": [
             {
-              "options": {
-                "match": "null",
-                "result": {
-                  "text": "N/A"
-                }
-              },
-              "type": "special"
+              "id": 0,
+              "op": "=",
+              "text": "N/A",
+              "type": 1,
+              "value": "null"
             }
           ],
           "thresholds": {
@@ -1203,7 +1240,7 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.0.2",
+      "pluginVersion": "7.5.5",
       "targets": [
         {
           "exemplar": true,
@@ -1231,13 +1268,11 @@
         "defaults": {
           "mappings": [
             {
-              "options": {
-                "match": "null",
-                "result": {
-                  "text": "N/A"
-                }
-              },
-              "type": "special"
+              "id": 0,
+              "op": "=",
+              "text": "N/A",
+              "type": 1,
+              "value": "null"
             }
           ],
           "thresholds": {
@@ -1286,7 +1321,7 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.0.2",
+      "pluginVersion": "7.5.5",
       "targets": [
         {
           "expr": "topk(1, sum(minio_bucket_usage_object_total) by (instance))",
@@ -1349,7 +1384,7 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.0.2",
+      "pluginVersion": "7.5.5",
       "targets": [
         {
           "exemplar": true,
@@ -1417,7 +1452,7 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.0.2",
+      "pluginVersion": "7.5.5",
       "targets": [
         {
           "exemplar": true,
@@ -1446,6 +1481,10 @@
       "dashLength": 10,
       "dashes": false,
       "datasource": "alphaban.ml - Prometheus",
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": []
+      },
       "fill": 1,
       "fillGradient": 0,
       "gridPos": {
@@ -1472,7 +1511,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "8.0.2",
+      "pluginVersion": "7.5.5",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -1542,6 +1581,10 @@
       "dashLength": 10,
       "dashes": false,
       "datasource": "alphaban.ml - Prometheus",
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": []
+      },
       "fill": 1,
       "fillGradient": 0,
       "gridPos": {
@@ -1568,7 +1611,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "8.0.2",
+      "pluginVersion": "7.5.5",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -1674,7 +1717,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "8.0.2",
+      "pluginVersion": "7.5.5",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -1751,6 +1794,10 @@
       "dashLength": 10,
       "dashes": false,
       "datasource": null,
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": []
+      },
       "fill": 1,
       "fillGradient": 0,
       "gridPos": {
@@ -1777,7 +1824,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "8.0.2",
+      "pluginVersion": "7.5.5",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -1857,6 +1904,10 @@
       "dashLength": 10,
       "dashes": false,
       "datasource": "alphaban.ml - Prometheus",
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": []
+      },
       "fill": 1,
       "fillGradient": 0,
       "gridPos": {
@@ -1883,7 +1934,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "8.0.2",
+      "pluginVersion": "7.5.5",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -1949,6 +2000,10 @@
       "dashLength": 10,
       "dashes": false,
       "datasource": "alphaban.ml - Prometheus",
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": []
+      },
       "fill": 1,
       "fillGradient": 0,
       "gridPos": {
@@ -1975,7 +2030,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "8.0.2",
+      "pluginVersion": "7.5.5",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -2041,6 +2096,10 @@
       "dashLength": 10,
       "dashes": false,
       "datasource": "alphaban.ml - Prometheus",
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": []
+      },
       "fill": 1,
       "fillGradient": 0,
       "gridPos": {
@@ -2067,7 +2126,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "8.0.2",
+      "pluginVersion": "7.5.5",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -2135,6 +2194,10 @@
       "dashLength": 10,
       "dashes": false,
       "datasource": "alphaban.ml - Prometheus",
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": []
+      },
       "fill": 1,
       "fillGradient": 0,
       "gridPos": {
@@ -2161,7 +2224,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "8.0.2",
+      "pluginVersion": "7.5.5",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -2268,7 +2331,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "8.0.2",
+      "pluginVersion": "7.5.5",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -2385,7 +2448,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "8.0.2",
+      "pluginVersion": "7.5.5",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -2452,6 +2515,10 @@
       "dashLength": 10,
       "dashes": false,
       "datasource": "alphaban.ml - Prometheus",
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": []
+      },
       "fill": 1,
       "fillGradient": 0,
       "gridPos": {
@@ -2478,7 +2545,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "8.0.2",
+      "pluginVersion": "7.5.5",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -2549,7 +2616,7 @@
     }
   ],
   "refresh": "10s",
-  "schemaVersion": 30,
+  "schemaVersion": 27,
   "style": "dark",
   "tags": [
     "minio"
@@ -2586,7 +2653,7 @@
     ]
   },
   "timezone": "",
-  "title": "MinIO Monitor",
-  "uid": "pJnnS4hZzz",
-  "version": 1
+  "title": "MinIO Overview",
+  "uid": "pJnnS4hZz",
+  "version": 3
 }
