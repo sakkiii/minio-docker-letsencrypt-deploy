@@ -89,16 +89,14 @@ services:
       retries: 3
 
   nginx:
-    image: staticfloat/nginx-certbot
+    image: nginx:1.21.1
     volumes:
-      - ./nginx/conf.d:/etc/nginx/user.conf.d:ro
-      - letsencrypt:/etc/letsencrypt
+      - ./nginx/conf.d:/etc/nginx/templates:ro
+      - certbot-etc:/etc/letsencrypt
+      - certbot-var:/var/lib/letsencrypt
     environment:
-      CERTBOT_EMAIL: ${CERTBOT_EMAIL}
-      ENVSUBST_VARS: FQDN
-      FQDN: ${FQDN}
+      - NGINX_HOST=${FQDN}
     ports:
-      - "80:80"
       - "443:443"
     depends_on:
       - minio1
@@ -107,6 +105,15 @@ services:
       - minio4
       - grafana
     restart: always
+
+  certbot:
+    image: certbot/certbot
+    ports:
+      - "80:80"
+    volumes:
+      - certbot-etc:/etc/letsencrypt
+      - certbot-var:/var/lib/letsencrypt
+    command: certonly --standalone --email ${CERTBOT_EMAIL} --agree-tos --no-eff-email -d ${FQDN}
 
   prometheus:
     image: prom/prometheus:latest
@@ -151,6 +158,7 @@ volumes:
   data3-2:
   data4-1:
   data4-2:
-  letsencrypt:
   grafana_data:
   prometheus_data:
+  certbot-etc:
+  certbot-var:
