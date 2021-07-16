@@ -17,6 +17,7 @@ services:
       MINIO_ROOT_USER: ${MINIO_ROOT_USER:-minio}
       MINIO_ROOT_PASSWORD: ${MINIO_ROOT_PASS:-minio123}
       MINIO_REGION_NAME: ${MINIO_REGION_NAME:-us-east-1}
+      MINIO_DOMAIN: ${FQDN}
       MINIO_PROMETHEUS_AUTH_TYPE: "public"
     command: server http://minio{1...4}/data{1...2} --console-address ":9001"
     healthcheck:
@@ -38,6 +39,7 @@ services:
       MINIO_ROOT_USER: ${MINIO_ROOT_USER:-minio}
       MINIO_ROOT_PASSWORD: ${MINIO_ROOT_PASS:-minio123}
       MINIO_REGION_NAME: ${MINIO_REGION_NAME:-us-east-1}
+      MINIO_DOMAIN: ${FQDN}
       MINIO_PROMETHEUS_AUTH_TYPE: "public"
     command: server http://minio{1...4}/data{1...2} --console-address ":9001"
     healthcheck:
@@ -59,6 +61,7 @@ services:
       MINIO_ROOT_USER: ${MINIO_ROOT_USER:-minio}
       MINIO_ROOT_PASSWORD: ${MINIO_ROOT_PASS:-minio123}
       MINIO_REGION_NAME: ${MINIO_REGION_NAME:-us-east-1}
+      MINIO_DOMAIN: ${FQDN}
       MINIO_PROMETHEUS_AUTH_TYPE: "public"
     command: server http://minio{1...4}/data{1...2} --console-address ":9001"
     healthcheck:
@@ -80,6 +83,7 @@ services:
       MINIO_ROOT_USER: ${MINIO_ROOT_USER:-minio}
       MINIO_ROOT_PASSWORD: ${MINIO_ROOT_PASS:-minio123}
       MINIO_REGION_NAME: ${MINIO_REGION_NAME:-us-east-1}
+      MINIO_DOMAIN: ${FQDN}
       MINIO_PROMETHEUS_AUTH_TYPE: "public"
     command: server http://minio{1...4}/data{1...2} --console-address ":9001"
     healthcheck:
@@ -98,6 +102,7 @@ services:
       - NGINX_HOST=${FQDN}
     ports:
       - "443:443"
+      - "9000:9000"
     depends_on:
       - minio1
       - minio2
