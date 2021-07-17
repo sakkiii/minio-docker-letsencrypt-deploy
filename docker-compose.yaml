@@ -153,6 +153,17 @@ services:
     - prometheus  
     restart: unless-stopped
 
+  myvault:
+    image: vault:1.7.3
+    expose:
+    - 3000
+    volumes:
+      - vault_file:/vault/file
+      - ./vault:/vault/config:rw
+    cap_add:
+      - IPC_LOCK
+    entrypoint: vault server -config=/vault/config/vault-config.json
+
 ## By default this config uses default local driver,
 ## For custom volumes replace with volume driver configuration.
 volumes:
@@ -168,3 +179,4 @@ volumes:
   certbot-var:
   grafana_data:
   prometheus_data:
+  vault_file:
