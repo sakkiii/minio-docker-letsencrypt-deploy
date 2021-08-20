@@ -20,7 +20,7 @@ cp .env.example .env
 - MINIO_ROOT_USER: MinIO ACCESS_KEY
 - MINIO_ROOT_PASSWORD: MinIO SECRET_KEY
 - MINIO_REGION_NAME: name of the location of the server
-- FQDN: a space separated list of domains for which you want to generate certificates.
+- FQDN: Minio Domain (certbot will generate letsencrypt certificates for that).
 - CERTBOT_EMAIL: where you will receive updates from letsencrypt.
 - GRAFANA_ADMIN_USER: Grafana admin username
 - GRAFANA_ADMIN_PASSWORD Grafana admin password
