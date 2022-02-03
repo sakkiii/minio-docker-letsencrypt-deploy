@@ -21,7 +21,7 @@ x-minio-common: &minio-common
 
 # starts 4 docker containers running minio server instances.
 # using nginx reverse proxy, load balancing, you can access
-# it through port 9000.
+# it through default port 9000.
 services:
   minio1:
     <<: *minio-common
