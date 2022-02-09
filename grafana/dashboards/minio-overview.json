@@ -26,7 +26,7 @@
       "type": "grafana",
       "id": "grafana",
       "name": "Grafana",
-      "version": "7.5.5"
+      "version": "8.0.6"
     },
     {
       "type": "panel",
@@ -65,6 +65,7 @@
   "gnetId": 13502,
   "graphTooltip": 0,
   "id": null,
+  "iteration": 1629787190164,
   "links": [
     {
       "icon": "external link",
@@ -79,17 +80,19 @@
   "panels": [
     {
       "cacheTimeout": null,
-      "datasource": "alphaban.ml - Prometheus",
+      "datasource": "${DS_PROMETHEUS}",
       "description": "",
       "fieldConfig": {
         "defaults": {
           "mappings": [
             {
-              "id": 0,
-              "op": "=",
-              "text": "N/A",
-              "type": 1,
-              "value": "null"
+              "options": {
+                "match": "null",
+                "result": {
+                  "text": "N/A"
+                }
+              },
+              "type": "special"
             }
           ],
           "thresholds": {
@@ -130,11 +133,11 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "7.5.5",
+      "pluginVersion": "8.0.6",
       "targets": [
         {
           "exemplar": true,
-          "expr": "time() - max(minio_node_process_starttime_seconds)",
+          "expr": "time() - max(minio_node_process_starttime_seconds{job=\"$scrape_jobs\"})",
           "format": "time_series",
           "instant": true,
           "interval": "",
@@ -152,17 +155,19 @@
     },
     {
       "cacheTimeout": null,
-      "datasource": "alphaban.ml - Prometheus",
+      "datasource": "${DS_PROMETHEUS}",
       "description": "",
       "fieldConfig": {
         "defaults": {
           "mappings": [
             {
-              "id": 0,
-              "op": "=",
-              "text": "N/A",
-              "type": 1,
-              "value": "null"
+              "options": {
+                "match": "null",
+                "result": {
+                  "text": "N/A"
+                }
+              },
+              "type": "special"
             }
           ],
           "thresholds": {
@@ -174,7 +179,7 @@
               }
             ]
           },
-          "unit": "decbytes"
+          "unit": "bytes"
         },
         "overrides": []
       },
@@ -203,10 +208,11 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "7.5.5",
+      "pluginVersion": "8.0.6",
       "targets": [
         {
-          "expr": "sum by (instance) (minio_s3_traffic_received_bytes{job=\"minio-job\"})",
+          "exemplar": true,
+          "expr": "sum by (instance) (minio_s3_traffic_received_bytes{job=\"$scrape_jobs\"})",
           "format": "table",
           "hide": false,
           "instant": false,
@@ -225,16 +231,18 @@
     },
     {
       "cacheTimeout": null,
-      "datasource": "alphaban.ml - Prometheus",
+      "datasource": "${DS_PROMETHEUS}",
       "fieldConfig": {
         "defaults": {
           "mappings": [
             {
-              "id": 0,
-              "op": "=",
-              "text": "N/A",
-              "type": 1,
-              "value": "null"
+              "options": {
+                "match": "null",
+                "result": {
+                  "text": "N/A"
+                }
+              },
+              "type": "special"
             }
           ],
           "thresholds": {
@@ -246,7 +254,7 @@
               }
             ]
           },
-          "unit": "decbytes"
+          "unit": "bytes"
         },
         "overrides": []
       },
@@ -273,10 +281,11 @@
         "showThresholdMarkers": true,
         "text": {}
       },
-      "pluginVersion": "7.5.5",
+      "pluginVersion": "8.0.6",
       "targets": [
         {
-          "expr": "topk(1, sum(minio_cluster_capacity_usable_free_bytes) by (instance))",
+          "exemplar": true,
+          "expr": "topk(1, sum(minio_cluster_capacity_usable_free_bytes{job=\"$scrape_jobs\"}) by (instance))",
           "format": "time_series",
           "instant": false,
           "interval": "1m",
@@ -296,11 +305,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "alphaban.ml - Prometheus",
-      "fieldConfig": {
-        "defaults": {},
-        "overrides": []
-      },
+      "datasource": "${DS_PROMETHEUS}",
       "fill": 1,
       "fillGradient": 0,
       "gridPos": {
@@ -327,7 +332,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "7.5.5",
+      "pluginVersion": "8.0.6",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -338,7 +343,7 @@
       "targets": [
         {
           "exemplar": true,
-          "expr": "sum(minio_bucket_usage_total_bytes) by (instance)",
+          "expr": "sum(minio_bucket_usage_total_bytes{job=\"$scrape_jobs\"}) by (instance)",
           "interval": "",
           "legendFormat": "Used Capacity",
           "refId": "A"
@@ -365,7 +370,7 @@
       "yaxes": [
         {
           "$$hashKey": "object:419",
-          "format": "decbytes",
+          "format": "bytes",
           "label": null,
           "logBase": 1,
           "max": null,
@@ -374,7 +379,7 @@
         },
         {
           "$$hashKey": "object:420",
-          "format": "decbytes",
+          "format": "bytes",
           "label": null,
           "logBase": 1,
           "max": null,
@@ -388,7 +393,7 @@
       }
     },
     {
-      "datasource": "alphaban.ml - Prometheus",
+      "datasource": "${DS_PROMETHEUS}",
       "fieldConfig": {
         "defaults": {
           "mappings": [],
@@ -429,10 +434,11 @@
         "showUnfilled": false,
         "text": {}
       },
-      "pluginVersion": "7.5.5",
+      "pluginVersion": "8.0.6",
       "targets": [
         {
-          "expr": "max by (range) (minio_bucket_objects_size_distribution)",
+          "exemplar": true,
+          "expr": "max by (range) (minio_bucket_objects_size_distribution{job=\"$scrape_jobs\"})",
           "format": "time_series",
           "instant": false,
           "interval": "",
@@ -449,17 +455,19 @@
     },
     {
       "cacheTimeout": null,
-      "datasource": "alphaban.ml - Prometheus",
+      "datasource": "${DS_PROMETHEUS}",
       "description": "",
       "fieldConfig": {
         "defaults": {
           "mappings": [
             {
-              "id": 0,
-              "op": "=",
-              "text": "N/A",
-              "type": 1,
-              "value": "null"
+              "options": {
+                "match": "null",
+                "result": {
+                  "text": "N/A"
+                }
+              },
+              "type": "special"
             }
           ],
           "thresholds": {
@@ -504,11 +512,11 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "7.5.5",
+      "pluginVersion": "8.0.6",
       "targets": [
         {
           "exemplar": true,
-          "expr": "sum (minio_node_file_descriptor_open_total)",
+          "expr": "sum (minio_node_file_descriptor_open_total{job=\"$scrape_jobs\"})",
           "format": "table",
           "hide": false,
           "instant": false,
@@ -527,17 +535,19 @@
     },
     {
       "cacheTimeout": null,
-      "datasource": "alphaban.ml - Prometheus",
+      "datasource": "${DS_PROMETHEUS}",
       "description": "",
       "fieldConfig": {
         "defaults": {
           "mappings": [
             {
-              "id": 0,
-              "op": "=",
-              "text": "N/A",
-              "type": 1,
-              "value": "null"
+              "options": {
+                "match": "null",
+                "result": {
+                  "text": "N/A"
+                }
+              },
+              "type": "special"
             }
           ],
           "thresholds": {
@@ -549,7 +559,7 @@
               }
             ]
           },
-          "unit": "decbytes"
+          "unit": "bytes"
         },
         "overrides": []
       },
@@ -578,10 +588,11 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "7.5.5",
+      "pluginVersion": "8.0.6",
       "targets": [
         {
-          "expr": "sum by (instance) (minio_s3_traffic_sent_bytes{job=\"minio-job\"})",
+          "exemplar": true,
+          "expr": "sum by (instance) (minio_s3_traffic_sent_bytes{job=\"$scrape_jobs\"})",
           "format": "table",
           "hide": false,
           "instant": false,
@@ -600,17 +611,19 @@
     },
     {
       "cacheTimeout": null,
-      "datasource": "alphaban.ml - Prometheus",
+      "datasource": "${DS_PROMETHEUS}",
       "description": "",
       "fieldConfig": {
         "defaults": {
           "mappings": [
             {
-              "id": 0,
-              "op": "=",
-              "text": "N/A",
-              "type": 1,
-              "value": "null"
+              "options": {
+                "match": "null",
+                "result": {
+                  "text": "N/A"
+                }
+              },
+              "type": "special"
             }
           ],
           "thresholds": {
@@ -655,11 +668,11 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "7.5.5",
+      "pluginVersion": "8.0.6",
       "targets": [
         {
           "exemplar": true,
-          "expr": "sum without (server,instance) (minio_node_go_routine_total)",
+          "expr": "sum without (server,instance) (minio_node_go_routine_total{job=\"$scrape_jobs\"})",
           "format": "table",
           "hide": false,
           "instant": false,
@@ -678,17 +691,19 @@
     },
     {
       "cacheTimeout": null,
-      "datasource": "alphaban.ml - Prometheus",
+      "datasource": "${DS_PROMETHEUS}",
       "description": "",
       "fieldConfig": {
         "defaults": {
           "mappings": [
             {
-              "id": 0,
-              "op": "=",
-              "text": "N/A",
-              "type": 1,
-              "value": "null"
+              "options": {
+                "match": "null",
+                "result": {
+                  "text": "N/A"
+                }
+              },
+              "type": "special"
             }
           ],
           "thresholds": {
@@ -733,10 +748,11 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "7.5.5",
+      "pluginVersion": "8.0.6",
       "targets": [
         {
-          "expr": "minio_cluster_nodes_online_total",
+          "exemplar": true,
+          "expr": "minio_cluster_nodes_online_total{job=\"$scrape_jobs\"}",
           "format": "table",
           "hide": false,
           "instant": true,
@@ -755,17 +771,19 @@
     },
     {
       "cacheTimeout": null,
-      "datasource": "alphaban.ml - Prometheus",
+      "datasource": "${DS_PROMETHEUS}",
       "description": "",
       "fieldConfig": {
         "defaults": {
           "mappings": [
             {
-              "id": 0,
-              "op": "=",
-              "text": "N/A",
-              "type": 1,
-              "value": "null"
+              "options": {
+                "match": "null",
+                "result": {
+                  "text": "N/A"
+                }
+              },
+              "type": "special"
             }
           ],
           "thresholds": {
@@ -810,11 +828,11 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "7.5.5",
+      "pluginVersion": "8.0.6",
       "targets": [
         {
           "exemplar": true,
-          "expr": "minio_cluster_disk_online_total",
+          "expr": "minio_cluster_disk_online_total{job=\"$scrape_jobs\"}",
           "format": "table",
           "hide": false,
           "instant": true,
@@ -833,16 +851,18 @@
     },
     {
       "cacheTimeout": null,
-      "datasource": "alphaban.ml - Prometheus",
+      "datasource": "${DS_PROMETHEUS}",
       "fieldConfig": {
         "defaults": {
           "mappings": [
             {
-              "id": 0,
-              "op": "=",
-              "text": "N/A",
-              "type": 1,
-              "value": "null"
+              "options": {
+                "match": "null",
+                "result": {
+                  "text": "N/A"
+                }
+              },
+              "type": "special"
             }
           ],
           "thresholds": {
@@ -891,10 +911,11 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "7.5.5",
+      "pluginVersion": "8.0.6",
       "targets": [
         {
-          "expr": "count(count by (bucket) (minio_bucket_usage_total_bytes))",
+          "exemplar": true,
+          "expr": "count(count by (bucket) (minio_bucket_usage_total_bytes{job=\"$scrape_jobs\"}))",
           "format": "time_series",
           "instant": false,
           "interval": "1m",
@@ -914,11 +935,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "alphaban.ml - Prometheus",
-      "fieldConfig": {
-        "defaults": {},
-        "overrides": []
-      },
+      "datasource": "${DS_PROMETHEUS}",
       "fill": 1,
       "fillGradient": 0,
       "gridPos": {
@@ -945,7 +962,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "7.5.5",
+      "pluginVersion": "8.0.6",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -956,7 +973,7 @@
       "targets": [
         {
           "exemplar": true,
-          "expr": "sum by (server) (rate(minio_s3_traffic_received_bytes[$__rate_interval]))",
+          "expr": "sum by (server) (rate(minio_s3_traffic_received_bytes{job=\"$scrape_jobs\"}[$__rate_interval]))",
           "interval": "1m",
           "intervalFactor": 2,
           "legendFormat": "Data Received [{{server}}]",
@@ -1014,11 +1031,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "alphaban.ml - Prometheus",
-      "fieldConfig": {
-        "defaults": {},
-        "overrides": []
-      },
+      "datasource": "${DS_PROMETHEUS}",
       "fill": 1,
       "fillGradient": 0,
       "gridPos": {
@@ -1045,7 +1058,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "7.5.5",
+      "pluginVersion": "8.0.6",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -1056,7 +1069,7 @@
       "targets": [
         {
           "exemplar": true,
-          "expr": "sum by (server) (rate(minio_s3_traffic_sent_bytes[$__rate_interval]))",
+          "expr": "sum by (server) (rate(minio_s3_traffic_sent_bytes{job=\"$scrape_jobs\"}[$__rate_interval]))",
           "interval": "1m",
           "intervalFactor": 2,
           "legendFormat": "Data Sent [{{server}}]",
@@ -1108,17 +1121,19 @@
     },
     {
       "cacheTimeout": null,
-      "datasource": "alphaban.ml - Prometheus",
+      "datasource": "${DS_PROMETHEUS}",
       "description": "",
       "fieldConfig": {
         "defaults": {
           "mappings": [
             {
-              "id": 0,
-              "op": "=",
-              "text": "N/A",
-              "type": 1,
-              "value": "null"
+              "options": {
+                "match": "null",
+                "result": {
+                  "text": "N/A"
+                }
+              },
+              "type": "special"
             }
           ],
           "thresholds": {
@@ -1163,10 +1178,11 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "7.5.5",
+      "pluginVersion": "8.0.6",
       "targets": [
         {
-          "expr": "minio_cluster_nodes_offline_total",
+          "exemplar": true,
+          "expr": "minio_cluster_nodes_offline_total{job=\"$scrape_jobs\"}",
           "format": "table",
           "hide": false,
           "instant": true,
@@ -1185,17 +1201,19 @@
     },
     {
       "cacheTimeout": null,
-      "datasource": "alphaban.ml - Prometheus",
+      "datasource": "${DS_PROMETHEUS}",
       "description": "",
       "fieldConfig": {
         "defaults": {
           "mappings": [
             {
-              "id": 0,
-              "op": "=",
-              "text": "N/A",
-              "type": 1,
-              "value": "null"
+              "options": {
+                "match": "null",
+                "result": {
+                  "text": "N/A"
+                }
+              },
+              "type": "special"
             }
           ],
           "thresholds": {
@@ -1240,11 +1258,11 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "7.5.5",
+      "pluginVersion": "8.0.6",
       "targets": [
         {
           "exemplar": true,
-          "expr": "minio_cluster_disk_offline_total",
+          "expr": "minio_cluster_disk_offline_total{job=\"$scrape_jobs\"}",
           "format": "table",
           "hide": false,
           "instant": true,
@@ -1263,16 +1281,18 @@
     },
     {
       "cacheTimeout": null,
-      "datasource": "alphaban.ml - Prometheus",
+      "datasource": "${DS_PROMETHEUS}",
       "fieldConfig": {
         "defaults": {
           "mappings": [
             {
-              "id": 0,
-              "op": "=",
-              "text": "N/A",
-              "type": 1,
-              "value": "null"
+              "options": {
+                "match": "null",
+                "result": {
+                  "text": "N/A"
+                }
+              },
+              "type": "special"
             }
           ],
           "thresholds": {
@@ -1321,10 +1341,11 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "7.5.5",
+      "pluginVersion": "8.0.6",
       "targets": [
         {
-          "expr": "topk(1, sum(minio_bucket_usage_object_total) by (instance))",
+          "exemplar": true,
+          "expr": "topk(1, sum(minio_bucket_usage_object_total{job=\"$scrape_jobs\"}) by (instance))",
           "format": "time_series",
           "instant": false,
           "interval": "1m",
@@ -1338,7 +1359,7 @@
     },
     {
       "cacheTimeout": null,
-      "datasource": "alphaban.ml - Prometheus",
+      "datasource": "${DS_PROMETHEUS}",
       "description": "",
       "fieldConfig": {
         "defaults": {
@@ -1384,11 +1405,11 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "7.5.5",
+      "pluginVersion": "8.0.6",
       "targets": [
         {
           "exemplar": true,
-          "expr": "minio_heal_time_last_activity_nano_seconds",
+          "expr": "minio_heal_time_last_activity_nano_seconds{job=\"$scrape_jobs\"}",
           "format": "time_series",
           "instant": true,
           "interval": "",
@@ -1406,7 +1427,7 @@
     },
     {
       "cacheTimeout": null,
-      "datasource": "alphaban.ml - Prometheus",
+      "datasource": "${DS_PROMETHEUS}",
       "description": "",
       "fieldConfig": {
         "defaults": {
@@ -1452,11 +1473,11 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "7.5.5",
+      "pluginVersion": "8.0.6",
       "targets": [
         {
           "exemplar": true,
-          "expr": "minio_usage_last_activity_nano_seconds",
+          "expr": "minio_usage_last_activity_nano_seconds{job=\"$scrape_jobs\"}",
           "format": "time_series",
           "instant": true,
           "interval": "",
@@ -1480,11 +1501,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "alphaban.ml - Prometheus",
-      "fieldConfig": {
-        "defaults": {},
-        "overrides": []
-      },
+      "datasource": "${DS_PROMETHEUS}",
       "fill": 1,
       "fillGradient": 0,
       "gridPos": {
@@ -1511,7 +1528,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "7.5.5",
+      "pluginVersion": "8.0.6",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -1522,7 +1539,7 @@
       "targets": [
         {
           "exemplar": true,
-          "expr": "sum by (server,api) (rate(minio_s3_requests_total[$__rate_interval]))",
+          "expr": "sum by (server,api) (increase(minio_s3_requests_total{job=\"$scrape_jobs\"}[$__rate_interval]))",
           "interval": "1m",
           "intervalFactor": 2,
           "legendFormat": "{{server,api}}",
@@ -1580,11 +1597,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "alphaban.ml - Prometheus",
-      "fieldConfig": {
-        "defaults": {},
-        "overrides": []
-      },
+      "datasource": "${DS_PROMETHEUS}",
       "fill": 1,
       "fillGradient": 0,
       "gridPos": {
@@ -1611,7 +1624,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "7.5.5",
+      "pluginVersion": "8.0.6",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -1622,7 +1635,7 @@
       "targets": [
         {
           "exemplar": true,
-          "expr": "rate(minio_s3_requests_errors_total[$__rate_interval])",
+          "expr": "sum by (server,api) (increase(minio_s3_requests_errors_total{job=\"$scrape_jobs\"}[$__rate_interval]))",
           "interval": "1m",
           "intervalFactor": 2,
           "legendFormat": "{{server,api}}",
@@ -1681,7 +1694,7 @@
       "bars": true,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "alphaban.ml - Prometheus",
+      "datasource": "${DS_PROMETHEUS}",
       "description": "Total number of bytes received and sent among all MinIO server instances",
       "fieldConfig": {
         "defaults": {
@@ -1717,7 +1730,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "7.5.5",
+      "pluginVersion": "8.0.6",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -1728,7 +1741,7 @@
       "targets": [
         {
           "exemplar": true,
-          "expr": "rate(minio_inter_node_traffic_sent_bytes{job=\"minio-job\"}[$__rate_interval])",
+          "expr": "rate(minio_inter_node_traffic_sent_bytes{job=\"$scrape_jobs\"}[$__rate_interval])",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 2,
@@ -1739,7 +1752,7 @@
         },
         {
           "exemplar": true,
-          "expr": "rate(minio_inter_node_traffic_received_bytes{job=\"minio-job\"}[$__rate_interval])",
+          "expr": "rate(minio_inter_node_traffic_received_bytes{job=\"$scrape_jobs\"}[$__rate_interval])",
           "interval": "",
           "legendFormat": "Internode Bytes Sent [{{server}}]",
           "refId": "B"
@@ -1793,11 +1806,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": null,
-      "fieldConfig": {
-        "defaults": {},
-        "overrides": []
-      },
+      "datasource": "${DS_PROMETHEUS}",
       "fill": 1,
       "fillGradient": 0,
       "gridPos": {
@@ -1824,7 +1833,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "7.5.5",
+      "pluginVersion": "8.0.6",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -1835,14 +1844,14 @@
       "targets": [
         {
           "exemplar": true,
-          "expr": "sum by (instance) (minio_heal_objects_heal_total)",
+          "expr": "sum by (instance) (minio_heal_objects_heal_total{job=\"$scrape_jobs\"})",
           "interval": "",
           "legendFormat": "Objects healed in current self heal run",
           "refId": "A"
         },
         {
           "exemplar": true,
-          "expr": "sum by (instance) (minio_heal_objects_error_total)",
+          "expr": "sum by (instance) (minio_heal_objects_error_total{job=\"$scrape_jobs\"})",
           "hide": false,
           "interval": "",
           "legendFormat": "Heal errors in current self heal run",
@@ -1850,7 +1859,7 @@
         },
         {
           "exemplar": true,
-          "expr": "sum by (instance) (minio_heal_objects_total) ",
+          "expr": "sum by (instance) (minio_heal_objects_total{job=\"$scrape_jobs\"}) ",
           "hide": false,
           "interval": "",
           "legendFormat": "Objects scanned in current self heal run",
@@ -1877,6 +1886,7 @@
       },
       "yaxes": [
         {
+          "$$hashKey": "object:846",
           "format": "short",
           "label": null,
           "logBase": 1,
@@ -1885,6 +1895,7 @@
           "show": true
         },
         {
+          "$$hashKey": "object:847",
           "format": "short",
           "label": null,
           "logBase": 1,
@@ -1903,11 +1914,7 @@
       "bars": true,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "alphaban.ml - Prometheus",
-      "fieldConfig": {
-        "defaults": {},
-        "overrides": []
-      },
+      "datasource": "${DS_PROMETHEUS}",
       "fill": 1,
       "fillGradient": 0,
       "gridPos": {
@@ -1934,7 +1941,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "7.5.5",
+      "pluginVersion": "8.0.6",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -1945,7 +1952,7 @@
       "targets": [
         {
           "exemplar": true,
-          "expr": "rate(minio_node_process_cpu_total_seconds[$__rate_interval])",
+          "expr": "rate(minio_node_process_cpu_total_seconds{job=\"$scrape_jobs\"}[$__rate_interval])",
           "interval": "",
           "legendFormat": "CPU Usage Rate [{{server}}]",
           "refId": "A"
@@ -1999,11 +2006,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "alphaban.ml - Prometheus",
-      "fieldConfig": {
-        "defaults": {},
-        "overrides": []
-      },
+      "datasource": "${DS_PROMETHEUS}",
       "fill": 1,
       "fillGradient": 0,
       "gridPos": {
@@ -2030,7 +2033,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "7.5.5",
+      "pluginVersion": "8.0.6",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -2041,7 +2044,7 @@
       "targets": [
         {
           "exemplar": true,
-          "expr": "minio_node_process_resident_memory_bytes",
+          "expr": "minio_node_process_resident_memory_bytes{job=\"$scrape_jobs\"}",
           "interval": "",
           "legendFormat": "Memory Used [{{server}}]",
           "refId": "A"
@@ -2095,11 +2098,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "alphaban.ml - Prometheus",
-      "fieldConfig": {
-        "defaults": {},
-        "overrides": []
-      },
+      "datasource": "${DS_PROMETHEUS}",
       "fill": 1,
       "fillGradient": 0,
       "gridPos": {
@@ -2126,7 +2125,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "7.5.5",
+      "pluginVersion": "8.0.6",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -2137,7 +2136,7 @@
       "targets": [
         {
           "exemplar": true,
-          "expr": "minio_node_disk_used_bytes",
+          "expr": "minio_node_disk_used_bytes{job=\"$scrape_jobs\"}",
           "format": "time_series",
           "instant": false,
           "interval": "",
@@ -2193,11 +2192,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "alphaban.ml - Prometheus",
-      "fieldConfig": {
-        "defaults": {},
-        "overrides": []
-      },
+      "datasource": "${DS_PROMETHEUS}",
       "fill": 1,
       "fillGradient": 0,
       "gridPos": {
@@ -2224,7 +2219,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "7.5.5",
+      "pluginVersion": "8.0.6",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -2235,7 +2230,7 @@
       "targets": [
         {
           "exemplar": true,
-          "expr": "minio_cluster_disk_free_inodes",
+          "expr": "minio_cluster_disk_free_inodes{job=\"$scrape_jobs\"}",
           "format": "time_series",
           "instant": false,
           "interval": "",
@@ -2295,7 +2290,7 @@
       "cacheTimeout": null,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "alphaban.ml - Prometheus",
+      "datasource": "${DS_PROMETHEUS}",
       "description": "Number of online disks per MinIO Server",
       "fieldConfig": {
         "defaults": {
@@ -2331,7 +2326,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "7.5.5",
+      "pluginVersion": "8.0.6",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -2342,7 +2337,7 @@
       "targets": [
         {
           "exemplar": true,
-          "expr": "rate(minio_node_syscall_read_total[$__rate_interval])",
+          "expr": "rate(minio_node_syscall_read_total{job=\"$scrape_jobs\"}[$__rate_interval])",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 2,
@@ -2353,7 +2348,7 @@
         },
         {
           "exemplar": true,
-          "expr": "rate(minio_node_syscall_write_total[$__rate_interval])",
+          "expr": "rate(minio_node_syscall_write_total{job=\"$scrape_jobs\"}[$__rate_interval])",
           "interval": "",
           "legendFormat": "Write Syscalls [{{server}}]",
           "refId": "B"
@@ -2412,7 +2407,7 @@
       "cacheTimeout": null,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "alphaban.ml - Prometheus",
+      "datasource": "${DS_PROMETHEUS}",
       "description": "",
       "fieldConfig": {
         "defaults": {
@@ -2448,7 +2443,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "7.5.5",
+      "pluginVersion": "8.0.6",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -2459,7 +2454,7 @@
       "targets": [
         {
           "exemplar": true,
-          "expr": "minio_node_file_descriptor_open_total",
+          "expr": "minio_node_file_descriptor_open_total{job=\"$scrape_jobs\"}",
           "interval": "",
           "legendFormat": "Open FDs [{{server}}]",
           "refId": "B"
@@ -2514,11 +2509,7 @@
       "bars": true,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "alphaban.ml - Prometheus",
-      "fieldConfig": {
-        "defaults": {},
-        "overrides": []
-      },
+      "datasource": "${DS_PROMETHEUS}",
       "fill": 1,
       "fillGradient": 0,
       "gridPos": {
@@ -2545,7 +2536,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "7.5.5",
+      "pluginVersion": "8.0.6",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -2556,7 +2547,7 @@
       "targets": [
         {
           "exemplar": true,
-          "expr": "rate(minio_node_io_rchar_bytes[$__rate_interval])",
+          "expr": "rate(minio_node_io_rchar_bytes{job=\"$scrape_jobs\"}[$__rate_interval])",
           "format": "time_series",
           "instant": false,
           "interval": "",
@@ -2565,7 +2556,7 @@
         },
         {
           "exemplar": true,
-          "expr": "rate(minio_node_io_wchar_bytes[$__rate_interval])",
+          "expr": "rate(minio_node_io_wchar_bytes{job=\"$scrape_jobs\"}[$__rate_interval])",
           "interval": "",
           "legendFormat": "Node WChar [{{server}}]",
           "refId": "B"
@@ -2616,13 +2607,37 @@
     }
   ],
   "refresh": "10s",
-  "schemaVersion": 27,
+  "schemaVersion": 30,
   "style": "dark",
   "tags": [
     "minio"
   ],
   "templating": {
-    "list": []
+    "list": [
+      {
+        "allValue": null,
+        "current": {},
+        "datasource": "${DS_PROMETHEUS}",
+        "definition": "label_values(job)",
+        "description": null,
+        "error": null,
+        "hide": 0,
+        "includeAll": true,
+        "label": null,
+        "multi": true,
+        "name": "scrape_jobs",
+        "options": [],
+        "query": {
+          "query": "label_values(job)",
+          "refId": "StandardVariableQuery"
+        },
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 0,
+        "type": "query"
+      }
+    ]
   },
   "time": {
     "from": "now-3h",
@@ -2654,6 +2669,6 @@
   },
   "timezone": "",
   "title": "MinIO Overview",
-  "uid": "pJnnS4hZz",
-  "version": 3
+  "uid": "TgmJnqnnk",
+  "version": 18
 }
