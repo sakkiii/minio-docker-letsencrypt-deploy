@@ -94,7 +94,7 @@ services:
     restart: on-failure
 
   grafana:
-    image: grafana/grafana:8.3.4
+    image: grafana/grafana:8.3.6
     expose:
       - 3000
     volumes:
