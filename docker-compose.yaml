@@ -52,7 +52,7 @@ services:
       - data4-2:/data2
 
   nginx:
-    image: nginx:1.21.3
+    image: nginx:1.21.6
     volumes:
       - ./nginx/conf.d:/etc/nginx/templates:ro
       - certbot-etc:/etc/letsencrypt
