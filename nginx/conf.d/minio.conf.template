@@ -13,6 +13,10 @@ upstream console {
         server minio4:9001;
 }
 
+upstream vault_backend {
+	server myvault:8200;
+}
+
 server {
     listen       9000 ssl;
     listen  [::]:9000 ssl;
@@ -126,5 +130,21 @@ server {
 	proxy_set_header   Host $host;
 	proxy_pass http://grafana:3000/;
 	rewrite  ^/grafana/(.*)  /$1 break;
+    }
+
+    location /ui/ {
+	proxy_pass "http://vault_backend/ui/";
+	proxy_set_header   Host $host;
+	proxy_set_header   X-Real-IP $remote_addr;
+	proxy_set_header   X-Forwarded-For $proxy_add_x_forwarded_for;
+	proxy_set_header   X-Forwarded-Host $server_name;	
+    }
+
+    location /v1/ {
+	proxy_pass "http://vault_backend/v1/";
+	proxy_set_header   Host $host;
+	proxy_set_header   X-Real-IP $remote_addr;
+	proxy_set_header   X-Forwarded-For $proxy_add_x_forwarded_for;
+	proxy_set_header   X-Forwarded-Host $server_name;
     }
 }
