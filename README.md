@@ -46,3 +46,8 @@ Here 4 MinIO server instances are reverse proxied through Nginx load balancing.
 ## License
 
 This project is licensed under the GNU Affero General Public License v3.0 - see the [LICENSE](LICENSE) file for details.
+
+
+### Infrastructure model
+
+![Infrastructure model](.infragenie/infrastructure_model.png)
