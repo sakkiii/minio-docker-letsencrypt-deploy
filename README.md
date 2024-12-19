@@ -11,7 +11,7 @@ Distributed MinIO deployed via Docker Compose with autorenew ssl certificate usi
 1. Create .env
 
 ```
-cp .env.example .env
+cp .env.sample .env
 ```
 
 2. change the environment variables 
